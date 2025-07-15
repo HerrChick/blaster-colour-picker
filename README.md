@@ -10,9 +10,8 @@ A TypeScript web component that uses Three.js to load and display OBJ files with
 - 📁 **File Loading**: Load OBJ files with optional MTL material files
 - 📸 **Screenshot Capture**: Capture and download viewport screenshots
 - 🔄 **Coordinate System Support**: Switch between Y-up and Z-up coordinate systems
-- 🎨 **Customizable**: Background colors, grid toggle, and more
 - 📱 **Responsive**: Works on desktop and mobile devices
-- 🔧 **TypeScript**: Fully typed with modern ES2020 features
+- 🔧 **TypeScript**: Fully typed 
 
 ## Installation
 
@@ -80,9 +79,6 @@ npm run preview
     // Change background color
     viewer.setBackgroundColor('#ffffff');
     
-    // Toggle grid visibility
-    viewer.toggleGrid(false);
-    
     // Capture screenshot
     const screenshot = viewer.captureViewport('png', 0.9);
     
@@ -129,16 +125,8 @@ viewer.setBackgroundColor('#1a1a1a'); // Dark theme
 viewer.setBackgroundColor('#ffffff');  // Light theme
 ```
 
-#### `toggleGrid(visible: boolean)`
-Shows or hides the grid helper.
-
-```javascript
-viewer.toggleGrid(false); // Hide grid
-viewer.toggleGrid(true);  // Show grid
-```
-
 #### `captureViewport(format: 'png' | 'jpeg', quality: number)`
-Captures the current viewport as a data URL.
+Captures the current viewport.
 
 ```javascript
 // Capture as PNG
