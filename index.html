@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>glTF Viewer Component Demo</title>
+    <link rel="stylesheet" href="src/demo-styles.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "obj-viewer": "/dist/obj-viewer.js",
+                "three": "/node_modules/three/build/three.module.js",
+                "three/examples/jsm/loaders/OBJLoader.js": "/node_modules/three/examples/jsm/loaders/OBJLoader.js",
+                "three/examples/jsm/loaders/MTLLoader.js": "/node_modules/three/examples/jsm/loaders/MTLLoader.js",
+                "three/examples/jsm/controls/OrbitControls.js": "/node_modules/three/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
+    <script src="src/demo-script.js" type="module"></script>
+
+</head>
+<body>
+    <div class="demo-container">
+        <h1>glTF Viewer Component Demo</h1>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ul>
+                <li><strong>Camera Controls:</strong> Left click and drag to rotate, right click and drag to pan, scroll to zoom</li>
+                <li><strong>Load Model:</strong> Use the file picker in the top-right panel to load a glTF file</li>
+                <li><strong>Mesh Visibility:</strong> Use the checkboxes in the control panel to show/hide individual meshes</li>
+                <li><strong>Demo Model:</strong> The component will automatically load the existing "ms-gnk-v11.gltf" file</li>
+            </ul>
+        </div>
+        
+        <div class="viewer-wrapper">
+            <obj-viewer id="viewer"></obj-viewer>
+        </div>
+        
+        <div class="demo-controls">
+            <button onclick="loadDemoModel()">Load Demo Model</button>
+            <button onclick="toggleGrid()">Toggle Grid</button>
+            <button onclick="resetCamera()">Reset Camera</button>
+            <button onclick="setDarkTheme()">Dark Theme</button>
+            <button onclick="setLightTheme()">Light Theme</button>
+            <button onclick="downloadViewport()">Download Viewport</button>
+            <button id="coordinateBtn" onclick="toggleCoordinateSystem()">Switch to Z-Up</button>
+        </div>
+    </div>
+
+</body>
+</html> 
