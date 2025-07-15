@@ -21,17 +21,32 @@ A TypeScript web component that uses Three.js to load and display OBJ files with
 npm install
 ```
 
-2. Build the component:
+2. Start the development server:
+```bash
+npm run dev
+```
+
+3. Open `http://localhost:3000` in your browser
+
+## Development
+
+### Build for Production
+
+To build the component for production:
+
 ```bash
 npm run build
 ```
 
-3. Start a local server:
-```bash
-npm run serve
-```
+This creates optimized files in the `dist/` directory.
 
-4. Open `http://localhost:8000` in your browser
+### Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
 
 ## Usage
 
