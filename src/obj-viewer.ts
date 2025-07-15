@@ -498,10 +498,7 @@ export class ObjViewer extends HTMLElement {
     link.click();
   }
 
-  /**
-   * Sets the coordinate system for the viewer and adjusts model orientation accordingly
-   * @param system - 'y-up' for Y-up coordinate system (Maya, 3ds Max style) or 'z-up' for Z-up coordinate system (Blender style)
-   */
+
   public setCoordinateSystem(system: 'y-up' | 'z-up'): void {
     if (!this.currentModel) {
       console.warn('No model loaded. Load a model first before changing coordinate system.');
@@ -524,10 +521,7 @@ export class ObjViewer extends HTMLElement {
     this.fitCameraToModel(this.currentModel);
   }
 
-  /**
-   * Gets the current coordinate system setting
-   * @returns The current coordinate system ('y-up' or 'z-up')
-   */
+
   public getCoordinateSystem(): 'y-up' | 'z-up' {
     if (!this.currentModel) {
       return 'y-up'; // Default
