@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "A TypeScript web component for viewing glTF files with Three.js",
   "main": "dist/gltf-viewer.js",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "serve": "npx http-server -p 8000 -o"
-  },
+  
+    "scripts": {
+      "build": "tsc",
+      "dev": "tsc --watch",
+      "serve": "npx http-server -p 8000 -o",
+      "vercel-build": "npm run build"
+    },
   "dependencies": {
     "three": "^0.158.0"
   },
