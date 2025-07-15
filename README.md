@@ -176,11 +176,3 @@ console.log(`Current coordinate system: ${currentSystem}`);
 - **Drag & Drop**: Use the file picker panel to load models
 - **URL Loading**: Load models from URLs programmatically
 
-## Development
-
-### Project Structure
-
-```
-├── src/
-│   ├── 
-```
