@@ -2,6 +2,8 @@
 
 A TypeScript web component that uses Three.js to load and display OBJ files with interactive camera controls, mesh visibility toggles, material editing, and advanced viewing features.
 
+See the demo [here!] (https://blaster-colour-picker.vercel.app/)
+
 ## Features
 
 - 🎮 **Interactive Camera Controls**: Pan, tilt, and zoom with mouse/touch
