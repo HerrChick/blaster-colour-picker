@@ -1,12 +1,15 @@
-# glTF Viewer Web Component
+# OBJ Viewer Web Component
 
-A TypeScript web component that uses Three.js to load and display glTF files with interactive camera controls and mesh visibility toggles.
+A TypeScript web component that uses Three.js to load and display OBJ files with interactive camera controls, mesh visibility toggles, material editing, and advanced viewing features.
 
 ## Features
 
 - 🎮 **Interactive Camera Controls**: Pan, tilt, and zoom with mouse/touch
 - 👁️ **Mesh Visibility Controls**: Show/hide individual meshes with checkboxes
-- 📁 **File Loading**: Load glTF files from the filesystem
+- 🎨 **Material Editing**: Click on meshes to edit colors and materials
+- 📁 **File Loading**: Load OBJ files with optional MTL material files
+- 📸 **Screenshot Capture**: Capture and download viewport screenshots
+- 🔄 **Coordinate System Support**: Switch between Y-up and Z-up coordinate systems
 - 🎨 **Customizable**: Background colors, grid toggle, and more
 - 📱 **Responsive**: Works on desktop and mobile devices
 - 🔧 **TypeScript**: Fully typed with modern ES2020 features
@@ -38,10 +41,10 @@ npm run serve
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="module" src="./dist/gltf-viewer.js"></script>
+    <script type="module" src="./dist/obj-viewer.js"></script>
 </head>
 <body>
-    <gltf-viewer></gltf-viewer>
+    <obj-viewer></obj-viewer>
 </body>
 </html>
 ```
@@ -49,21 +52,30 @@ npm run serve
 ### Advanced Usage
 
 ```html
-<gltf-viewer id="viewer"></gltf-viewer>
+<obj-viewer id="viewer"></obj-viewer>
 
 <script type="module">
-    import './dist/gltf-viewer.js';
+    import './dist/obj-viewer.js';
     
     const viewer = document.getElementById('viewer');
     
     // Load a model from URL
-    viewer.loadModelFromUrl('./path/to/model.gltf');
+    viewer.loadModelFromUrl('./path/to/model.obj', './path/to/materials.mtl');
     
     // Change background color
     viewer.setBackgroundColor('#ffffff');
     
     // Toggle grid visibility
     viewer.toggleGrid(false);
+    
+    // Capture screenshot
+    const screenshot = viewer.captureViewport('png', 0.9);
+    
+    // Download viewport
+    viewer.downloadViewport('my-screenshot.png');
+    
+    // Set coordinate system
+    viewer.setCoordinateSystem('z-up');
 </script>
 ```
 
@@ -73,8 +85,9 @@ npm run serve
 
 The component automatically provides these features:
 
-- **File Picker**: Upload glTF files from your filesystem
+- **File Picker**: Upload OBJ files from your filesystem (with optional MTL files)
 - **Mesh Controls**: Checkboxes to show/hide individual meshes
+- **Interactive Mesh Editing**: Click on meshes to open material editing modal
 - **Camera Controls**: 
   - Left click + drag: Rotate
   - Right click + drag: Pan
@@ -82,11 +95,15 @@ The component automatically provides these features:
 
 ### Methods
 
-#### `loadModelFromUrl(url: string)`
-Loads a glTF model from a URL.
+#### `loadModelFromUrl(objUrl: string, mtlUrl?: string)`
+Loads an OBJ model from a URL with optional MTL material file.
 
 ```javascript
-viewer.loadModelFromUrl('./model.gltf');
+// Load OBJ with materials
+viewer.loadModelFromUrl('./model.obj', './materials.mtl');
+
+// Load OBJ without materials
+viewer.loadModelFromUrl('./model.obj');
 ```
 
 #### `setBackgroundColor(color: string)`
@@ -105,63 +122,65 @@ viewer.toggleGrid(false); // Hide grid
 viewer.toggleGrid(true);  // Show grid
 ```
 
+#### `captureViewport(format: 'png' | 'jpeg', quality: number)`
+Captures the current viewport as a data URL.
+
+```javascript
+// Capture as PNG
+const pngData = viewer.captureViewport('png', 0.9);
+
+// Capture as JPEG
+const jpegData = viewer.captureViewport('jpeg', 0.8);
+```
+
+#### `downloadViewport(filename: string)`
+Downloads the current viewport as an image file.
+
+```javascript
+viewer.downloadViewport('screenshot.png');
+viewer.downloadViewport('model-view.jpg');
+```
+
+#### `setCoordinateSystem(system: 'y-up' | 'z-up')`
+Sets the coordinate system for the viewer and adjusts model orientation accordingly.
+
+```javascript
+// For Blender-style Z-up models
+viewer.setCoordinateSystem('z-up');
+
+// For Maya/3ds Max-style Y-up models (default)
+viewer.setCoordinateSystem('y-up');
+```
+
+#### `getCoordinateSystem(): 'y-up' | 'z-up'`
+Gets the current coordinate system setting.
+
+```javascript
+const currentSystem = viewer.getCoordinateSystem();
+console.log(`Current coordinate system: ${currentSystem}`);
+```
+
+## Interactive Features
+
+### Mesh Material Editing
+
+- **Click on any mesh** in the 3D view to open the material editing modal
+- **Change colors** using the color picker
+- **Reset to original** material if needed
+- **Apply changes** to see them immediately in the viewport
+
+### File Loading
+
+- **OBJ Files**: Load standard OBJ geometry files
+- **MTL Files**: Optional material files for textures and materials
+- **Drag & Drop**: Use the file picker panel to load models
+- **URL Loading**: Load models from URLs programmatically
+
 ## Development
 
 ### Project Structure
 
 ```
 ├── src/
-│   └── gltf-viewer.ts      # Main component source
-├── dist/                   # Built files (generated)
-├── index.html             # Demo page
-├── package.json           # Dependencies and scripts
-├── tsconfig.json          # TypeScript configuration
-└── README.md              # This file
+│   ├── 
 ```
-
-### Build Commands
-
-- `npm run build` - Build the component once
-- `npm run dev` - Watch for changes and rebuild automatically
-- `npm run serve` - Start a local development server
-
-### Customization
-
-The component uses Shadow DOM for encapsulation. You can customize the appearance by modifying the CSS in the `init()` method of the component.
-
-## Browser Support
-
-- Chrome 67+
-- Firefox 63+
-- Safari 11.1+
-- Edge 79+
-
-## Dependencies
-
-- **Three.js**: 3D graphics library
-- **TypeScript**: Type safety and modern JavaScript features
-
-## License
-
-MIT License - feel free to use this component in your projects!
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Module not found errors**: Make sure to run `npm install` first
-2. **CORS errors**: Use a local server (like `npm run serve`) instead of opening files directly
-3. **Model not loading**: Check that the glTF file is valid and accessible
-4. **Performance issues**: Large models may take time to load and render
-
-### Debug Mode
-
-Open the browser console to see loading progress and any error messages. 
