@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { fileInputPanelTemplate, modalTemplate } from './obj-viewer-templates.js';
+import objViewerStyles from './obj-viewer.css?inline';
 
 interface MeshInfo {
   name: string;
@@ -44,222 +46,9 @@ export class ObjViewer extends HTMLElement {
   private init(): void {
     if (!this.shadowRoot) return;
 
-    // Create styles
+    // Create and add styles
     const style = document.createElement('style');
-    style.textContent = `
-      :host {
-        display: block;
-        width: 100%;
-        height: 100%;
-        min-height: 400px;
-      }
-      
-      .viewer-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: #1a1a1a;
-      }
-      
-      .file-input-panel {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 10px;
-        border-radius: 6px;
-        font-family: Arial, sans-serif;
-        font-size: 12px;
-        z-index: 1000;
-        min-width: 180px;
-        max-width: 220px;
-      }
-      
-      .file-input-panel h3 {
-        margin: 0 0 8px 0;
-        font-size: 14px;
-        color: #fff;
-      }
-      
-      .file-input {
-        margin-bottom: 10px;
-      }
-      
-      .file-input input {
-        width: 75%;
-        padding: 4px;
-        border: 1px solid #555;
-        border-radius: 3px;
-        background: #333;
-        color: white;
-        margin-bottom: 4px;
-        font-size: 11px;
-      }
-      
-      .file-info {
-        font-size: 10px;
-        color: #ccc;
-        margin-bottom: 8px;
-        line-height: 1.3;
-      }
-      
-      .loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-size: 18px;
-        z-index: 1001;
-      }
-
-      .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-      }
-
-      .modal.show {
-        display: flex;
-      }
-
-      .modal-content {
-        background: #2a2a2a;
-        color: white;
-        padding: 20px;
-        border-radius: 8px;
-        min-width: 300px;
-        font-family: Arial, sans-serif;
-      }
-
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        border-bottom: 1px solid #555;
-        padding-bottom: 10px;
-      }
-
-      .modal-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin: 0;
-      }
-
-      .close-btn {
-        background: none;
-        border: none;
-        color: #ccc;
-        font-size: 20px;
-        cursor: pointer;
-        padding: 0;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .close-btn:hover {
-        color: white;
-      }
-
-      .modal-body {
-        margin-bottom: 15px;
-      }
-
-      .control-group {
-        margin-bottom: 15px;
-      }
-
-      .control-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-      }
-
-      .visibility-control {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .visibility-control input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        cursor: pointer;
-      }
-
-      .color-control {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .color-picker {
-        width: 50px;
-        height: 30px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        background: #fff;
-      }
-
-      .reset-color-btn {
-        background: #555;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-      }
-
-      .reset-color-btn:hover {
-        background: #666;
-      }
-
-      .modal-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-      }
-
-      .btn {
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      }
-
-      .btn-primary {
-        background: #007bff;
-        color: white;
-      }
-
-      .btn-primary:hover {
-        background: #0056b3;
-      }
-
-      .btn-secondary {
-        background: #6c757d;
-        color: white;
-      }
-
-      .btn-secondary:hover {
-        background: #545b62;
-      }
-    `;
+    style.textContent = objViewerStyles;
 
     // Create container
     this.container = document.createElement('div');
@@ -268,53 +57,12 @@ export class ObjViewer extends HTMLElement {
     // Create file input panel
     this.fileInputPanel = document.createElement('div');
     this.fileInputPanel.className = 'file-input-panel';
-    this.fileInputPanel.innerHTML = `
-      <h3>Load Model</h3>
-      <div class="file-input">
-        <input type="file" accept=".obj" id="objFileInput" placeholder="Select OBJ file">
-        <input type="file" accept=".mtl" id="mtlFileInput" placeholder="Select MTL file (optional)">
-        <div class="file-info">Select an OBJ file and optionally an MTL material file</div>
-      </div>
-      <div style="font-size: 12px; color: #ccc;">
-        Click on any mesh in the model to edit its properties
-      </div>
-    `;
+    this.fileInputPanel.innerHTML = fileInputPanelTemplate;
 
     // Create modal
     this.modal = document.createElement('div');
     this.modal.className = 'modal';
-    this.modal.innerHTML = `
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Mesh Properties</h3>
-          <button class="close-btn" id="closeModal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="control-group">
-            <label>Mesh Name:</label>
-            <div id="meshName">-</div>
-          </div>
-          <div class="control-group">
-            <label>Visibility:</label>
-            <div class="visibility-control">
-              <input type="checkbox" id="visibilityToggle" checked>
-              <span>Visible</span>
-            </div>
-          </div>
-          <div class="control-group">
-            <label>Color:</label>
-            <div class="color-control">
-              <input type="color" id="colorPicker" class="color-picker" value="#ffffff">
-              <button class="reset-color-btn" id="resetColor">Reset</button>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-          <button class="btn btn-primary" id="applyBtn">Apply</button>
-        </div>
-      </div>
-    `;
+    this.modal.innerHTML = modalTemplate;
 
     // Add elements to shadow DOM
     this.shadowRoot.appendChild(style);
