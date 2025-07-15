@@ -374,9 +374,6 @@ export class ObjViewer extends HTMLElement {
     rimLight.position.set(-10, 5, -10);
     this.scene.add(rimLight);
 
-    const gridHelper = new THREE.GridHelper(10, 10);
-    this.scene.add(gridHelper);
-
     this.objLoader = new OBJLoader();
     this.mtlLoader = new MTLLoader();
 
@@ -737,13 +734,6 @@ export class ObjViewer extends HTMLElement {
     this.scene.background = new THREE.Color(color);
   }
 
-  public toggleGrid(visible: boolean): void {
-    const gridHelper = this.scene.children.find(child => child instanceof THREE.GridHelper);
-    if (gridHelper) {
-      gridHelper.visible = visible;
-    }
-  }
-
   public captureViewport(format: 'png' | 'jpeg' = 'png', quality: number = 0.9): string {
     this.renderer.render(this.scene, this.camera);
     
@@ -784,33 +774,6 @@ export class ObjViewer extends HTMLElement {
 
     // Update camera and controls to fit the reoriented model
     this.fitCameraToModel(this.currentModel);
-
-    // Update grid helper orientation
-    this.updateGridHelper(system);
-  }
-
-  /**
-   * Updates the grid helper orientation based on coordinate system
-   * @param system - The coordinate system being used
-   */
-  private updateGridHelper(system: 'y-up' | 'z-up'): void {
-    // Find and remove existing grid helper
-    const existingGrid = this.scene.children.find(child => child instanceof THREE.GridHelper);
-    if (existingGrid) {
-      this.scene.remove(existingGrid);
-    }
-
-    // Create new grid helper with appropriate orientation
-    const gridHelper = new THREE.GridHelper(10, 10);
-    
-    if (system === 'z-up') {
-      // For Z-up, we want the grid on the XY plane, so no rotation needed for GridHelper
-      // GridHelper is already in XZ plane by default, which becomes the ground plane when model is rotated
-    } else {
-      // For Y-up, GridHelper default orientation (XZ plane) is correct
-    }
-    
-    this.scene.add(gridHelper);
   }
 
   /**

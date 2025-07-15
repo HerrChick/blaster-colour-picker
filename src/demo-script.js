@@ -1,4 +1,8 @@
-import '/dist/obj-viewer.js';
+import { ObjViewer } from './obj-viewer.js';
+import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 window.downloadViewport = function() {
     const viewer = document.getElementById('viewer');
@@ -21,25 +25,16 @@ window.addEventListener('DOMContentLoaded', () => {
 window.loadDemoModel = function() {
     const viewer = document.getElementById('viewer');
     if (viewer && viewer.loadModelFromUrl) {
-        viewer.loadModelFromUrl('./ms-gnk-v11.obj', './ms-gnk-v11.mtl');
+        viewer.loadModelFromUrl('/ms-gnk-v11.obj', '/ms-gnk-v11.mtl');
     }
 };
 
-window.toggleGrid = function() {
-    const viewer = document.getElementById('viewer');
-    if (viewer && viewer.toggleGrid) {
-        // This will toggle the grid visibility
-        // You might need to track the current state in a real implementation
-        viewer.toggleGrid(false);
-        setTimeout(() => viewer.toggleGrid(true), 1000);
-    }
-};
 
 window.resetCamera = function() {
     const viewer = document.getElementById('viewer');
     if (viewer && viewer.loadModelFromUrl) {
         // Reload the model to reset camera
-        viewer.loadModelFromUrl('./ms-gnk-v11.obj', './ms-gnk-v11.mtl');
+        viewer.loadModelFromUrl('/ms-gnk-v11.obj', '/ms-gnk-v11.mtl');
     }
 };
 

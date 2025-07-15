@@ -1,23 +1,28 @@
 {
   "name": "gltf-viewer-component",
   "version": "1.0.0",
+  "type": "module",
   "description": "A TypeScript web component for viewing glTF files with Three.js",
   "main": "dist/gltf-viewer.js",
-  
-    "scripts": {
-      "build": "tsc",
-      "dev": "tsc --watch",
-      "serve": "npx http-server -p 8000 -o",
-      "vercel-build": "npm run build"
-    },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "three": "^0.158.0"
   },
   "devDependencies": {
+    "@types/three": "^0.158.0",
     "typescript": "^5.2.2",
-    "@types/three": "^0.158.0"
+    "vite": "^7.0.4"
   },
-  "keywords": ["three.js", "gltf", "web-component", "typescript"],
+  "keywords": [
+    "three.js",
+    "gltf",
+    "web-component",
+    "typescript"
+  ],
   "author": "",
   "license": "MIT"
-} 
+}

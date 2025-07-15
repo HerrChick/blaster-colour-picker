@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>glTF Viewer Component Demo</title>
     <link rel="stylesheet" href="src/demo-styles.css">
-    <script type="importmap">
-        {
-            "imports": {
-                "obj-viewer": "./dist/obj-viewer.js",
-                "three": "./node_modules/three/build/three.module.js",
-                "three/examples/jsm/loaders/OBJLoader.js": "./node_modules/three/examples/jsm/loaders/OBJLoader.js",
-                "three/examples/jsm/loaders/MTLLoader.js": "./node_modules/three/examples/jsm/loaders/MTLLoader.js",
-                "three/examples/jsm/controls/OrbitControls.js": "./node_modules/three/examples/jsm/controls/OrbitControls.js"
-            }
-        }
-    </script>
-    <script src="src/demo-script.js" type="module"></script>
-
+    <script type="module" src="src/demo-script.js"></script>
 </head>
 <body>
     <div class="demo-container">
@@ -39,7 +27,6 @@
         
         <div class="demo-controls">
             <button onclick="loadDemoModel()">Load Demo Model</button>
-            <button onclick="toggleGrid()">Toggle Grid</button>
             <button onclick="resetCamera()">Reset Camera</button>
             <button onclick="setDarkTheme()">Dark Theme</button>
             <button onclick="setLightTheme()">Light Theme</button>
