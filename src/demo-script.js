@@ -25,7 +25,8 @@ window.addEventListener('DOMContentLoaded', () => {
 window.loadDemoModel = function() {
     const viewer = document.getElementById('viewer');
     if (viewer && viewer.loadModelFromUrl) {
-        viewer.loadModelFromUrl('/ms-gnk-v11.obj', '/ms-gnk-v11.mtl');
+        viewer.loadModelFromUrl('https://opnqkhpyffevwdf1.public.blob.vercel-storage.com/ms-gnk-v11.obj', 
+            'https://opnqkhpyffevwdf1.public.blob.vercel-storage.com/ms-gnk-v11.mtl');
     }
 };
 

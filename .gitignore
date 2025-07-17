@@ -102,3 +102,5 @@ temp/
 
 vercel.json
 .vercel
+
+file-upload.js
