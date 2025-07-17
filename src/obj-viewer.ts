@@ -22,6 +22,8 @@ export class ObjViewer extends HTMLElement {
   private mtlLoader!: MTLLoader;
   private meshes: MeshInfo[] = [];
   private currentModel: THREE.Group | null = null;
+  private initialCameraPosition: THREE.Vector3 | null = null;
+  private initialControlsTarget: THREE.Vector3 | null = null;
   private container!: HTMLDivElement;
   private fileInputPanel!: HTMLDivElement;
   private modal!: HTMLDivElement;
@@ -387,6 +389,9 @@ export class ObjViewer extends HTMLElement {
     this.camera.lookAt(center);
     this.controls.target.copy(center);
     this.controls.update();
+
+    this.initialCameraPosition = this.camera.position.clone();
+    this.initialControlsTarget = this.controls.target.clone();
   }
 
   private showLoading(show: boolean): void {
@@ -505,31 +510,36 @@ export class ObjViewer extends HTMLElement {
       return;
     }
 
-    // Reset any previous rotations
     this.currentModel.rotation.set(0, 0, 0);
 
-    // Apply rotation based on coordinate system
     if (system === 'z-up') {
-      // Convert from Y-up to Z-up: rotate -90 degrees around X axis
       this.currentModel.rotation.x = -Math.PI / 2;
     } else if (system === 'y-up') {
-      // Keep Y-up (default Three.js coordinate system)
       this.currentModel.rotation.x = 0;
     }
 
-    // Update camera and controls to fit the reoriented model
     this.fitCameraToModel(this.currentModel);
   }
 
 
   public getCoordinateSystem(): 'y-up' | 'z-up' {
     if (!this.currentModel) {
-      return 'y-up'; // Default
+      return 'y-up';
     }
     
-    // Check the current rotation to determine coordinate system
     const rotation = this.currentModel.rotation.x;
     return Math.abs(rotation + Math.PI / 2) < 0.01 ? 'z-up' : 'y-up';
+  }
+
+  public resetCamera(): void {
+    if (!this.initialCameraPosition || !this.initialControlsTarget) {
+      console.warn('No initial camera position stored. Load a model first.');
+      return;
+    }
+
+    this.camera.position.copy(this.initialCameraPosition);
+    this.controls.target.copy(this.initialControlsTarget);
+    this.controls.update();
   }
 }
 

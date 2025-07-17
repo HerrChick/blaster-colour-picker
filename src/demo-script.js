@@ -11,17 +11,14 @@ window.downloadViewport = function() {
     }
 };
 
-// Wait for the component to be ready
 window.addEventListener('DOMContentLoaded', () => {
     const viewer = document.getElementById('viewer');
     
-    // Load the demo model automatically
     setTimeout(() => {
         loadDemoModel();
     }, 100);
 });
 
-// Demo functions
 window.loadDemoModel = function() {
     const viewer = document.getElementById('viewer');
     if (viewer && viewer.loadModelFromUrl) {
@@ -33,9 +30,8 @@ window.loadDemoModel = function() {
 
 window.resetCamera = function() {
     const viewer = document.getElementById('viewer');
-    if (viewer && viewer.loadModelFromUrl) {
-        // Reload the model to reset camera
-        viewer.loadModelFromUrl('/ms-gnk-v11.obj', '/ms-gnk-v11.mtl');
+    if (viewer && viewer.resetCamera) {
+        viewer.resetCamera();
     }
 };
 
@@ -63,7 +59,6 @@ window.toggleCoordinateSystem = function() {
         
         viewer.setCoordinateSystem(newSystem);
         
-        // Update button text to show next action
         button.textContent = newSystem === 'y-up' ? 'Switch to Z-Up' : 'Switch to Y-Up';
         
         console.log(`Coordinate system changed to: ${newSystem}`);
