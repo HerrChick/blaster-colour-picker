@@ -1,8 +1,5 @@
 import { ObjViewer } from './obj-viewer.js';
-import * as THREE from 'three';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
 
 window.downloadViewport = function() {
     const viewer = document.getElementById('viewer');
