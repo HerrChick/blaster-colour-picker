@@ -1,19 +1,8 @@
-# OBJ Viewer Web Component
+# Nerf Blaster Colour Picker Web Component
 
-A TypeScript web component that uses Three.js to load and display OBJ files with interactive camera controls, mesh visibility toggles, material editing, and advanced viewing features.
+A TypeScript web component that uses Three.js to load and display OBJ files to allow vendors to provide interactive colour picking to their shops.
 
 See the demo [here!](https://blaster-colour-picker.vercel.app/)
-
-## Features
-
-- 🎮 **Interactive Camera Controls**: Pan, tilt, and zoom with mouse/touch
-- 👁️ **Mesh Visibility Controls**: Show/hide individual meshes with checkboxes
-- 🎨 **Material Editing**: Click on meshes to edit colors and materials
-- 📁 **File Loading**: Load OBJ files with optional MTL material files
-- 📸 **Screenshot Capture**: Capture and download viewport screenshots
-- 🔄 **Coordinate System Support**: Switch between Y-up and Z-up coordinate systems
-- 📱 **Responsive**: Works on desktop and mobile devices
-- 🔧 **TypeScript**: Fully typed 
 
 ## Installation
 
@@ -92,20 +81,6 @@ npm run preview
 </script>
 ```
 
-## API Reference
-
-### Properties
-
-The component automatically provides these features:
-
-- **File Picker**: Upload OBJ files from your filesystem (with optional MTL files)
-- **Mesh Controls**: Checkboxes to show/hide individual meshes
-- **Interactive Mesh Editing**: Click on meshes to open material editing modal
-- **Camera Controls**: 
-  - Left click + drag: Rotate
-  - Right click + drag: Pan
-  - Scroll: Zoom
-
 ### Methods
 
 #### `loadModelFromUrl(objUrl: string, mtlUrl?: string)`
@@ -164,20 +139,4 @@ Gets the current coordinate system setting.
 const currentSystem = viewer.getCoordinateSystem();
 console.log(`Current coordinate system: ${currentSystem}`);
 ```
-
-## Interactive Features
-
-### Mesh Material Editing
-
-- **Click on any mesh** in the 3D view to open the material editing modal
-- **Change colors** using the color picker
-- **Reset to original** material if needed
-- **Apply changes** to see them immediately in the viewport
-
-### File Loading
-
-- **OBJ Files**: Load standard OBJ geometry files
-- **MTL Files**: Optional material files for textures and materials
-- **Drag & Drop**: Use the file picker panel to load models
-- **URL Loading**: Load models from URLs programmatically
 
